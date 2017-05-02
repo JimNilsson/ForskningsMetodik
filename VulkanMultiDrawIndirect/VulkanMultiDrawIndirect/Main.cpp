@@ -7,6 +7,8 @@
 #include <Parsers.h>
 #include "Timer.h"
 #include "InputManager.h"
+#include "Renderer.h"
+#include "DX11Renderer.h"
 #define SCRWIDTH (800)
 #define SCRHEIGHT (640)
 
@@ -95,7 +97,7 @@ int main(int argc, char** argv)
 		GetClassInfo(GetModuleHandle(NULL), className, &wndClass);
 		//Vulkan needs "wndClass.hInstance" and "hwnd"
 
-		Renderer renderer(hwnd, SCRWIDTH, SCRHEIGHT);
+		IRenderer* renderer = new DX11Renderer(hwnd, SCRWIDTH, SCRHEIGHT);
 	
 
 		Scene scene(renderer, SCRWIDTH, SCRHEIGHT);

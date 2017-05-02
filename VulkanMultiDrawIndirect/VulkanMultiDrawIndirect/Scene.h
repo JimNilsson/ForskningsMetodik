@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer.h"
+#include "IRenderer.h"
 
 #include "CameraManager.h"
 
@@ -8,29 +8,29 @@ class Scene
 {
 	struct Object
 	{
-		Renderer::MeshHandle mesh;
-		Renderer::TextureHandle texture;
-		Renderer::TranslationHandle translationHandle;
-		Renderer::BoundingHandle boundingHandle;
+		IRenderer::MeshHandle mesh;
+		IRenderer::TextureHandle texture;
+		IRenderer::TranslationHandle translationHandle;
+		IRenderer::BoundingHandle boundingHandle;
 		DirectX::XMFLOAT4X4 translation;
 	};
 public:
-	Scene(Renderer& renderer, float width, float height);
+	Scene(IRenderer* renderer, float width, float height);
 	~Scene();
 
 
-	const void Init();
-	const void Frame(float dt);
-	const void Shutdown();
+	void Init();
+	void Frame(float dt);
+	void Shutdown();
 
 	CameraManager _camera;
 private:
-	const void _CreateObject(const char* mesh, const char* texture, const DirectX::XMMATRIX& translation);
+	void _CreateObject(const char* mesh, const char* texture, const DirectX::XMMATRIX& translation);
 
 	int _StartTest(const char* outfile);
 	void _EndTest();
 private:
-	Renderer& _renderer;
+	IRenderer* _renderer;
 	CPUTimer _timer;
 
 	uint32_t _frameCount;

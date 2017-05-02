@@ -7,7 +7,7 @@
 #include <iostream>
 using namespace DirectX;
 
-Scene::Scene(Renderer& renderer, float width, float height) : _renderer(renderer), _camera(width, height), _testRunning(false)
+Scene::Scene(IRenderer* renderer, float width, float height) : _renderer(renderer), _camera(width, height), _testRunning(false)
 {
 
 }
@@ -17,26 +17,26 @@ Scene::~Scene()
 {
 }
 
-const void Scene::Init()
+void Scene::Init()
 {
 	srand(1337);
-	_renderer.SetProjectionMatrix(_camera.GetProj());
+	_renderer->SetProjectionMatrix(_camera.GetProj());
 	_camera.TranslateActiveCamera(100.0f, 0.0f, -80.0f);
 
 	XMMATRIX t = XMMatrixTranslation(-20, 0, 0);
 
-	_CreateObject("../Assets/Meshes/deer-obj.obj", "../Assets/Textures/deer texture.tga", t);
+	_CreateObject("../Assets/Meshes/deer-obj.obj", "../Assets/Textures/deer texture.png", t);
 	
 	auto deer = _objects[0];
 	XMStoreFloat4x4(&_objects[0].translation, t);
 	
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		for (int j = 0; j < 100; j++)
+		for (int j = 0; j < 5; j++)
 		{
 			t = XMMatrixTranslation(20.0f * i, 0, 16.0f * j);
 			XMStoreFloat4x4(&deer.translation, t);
-			deer.translationHandle = _renderer.CreateTranslation(t);
+			deer.translationHandle = _renderer->CreateTranslation(t);
 			_objects.push_back(deer);
 		}
 	}
@@ -47,7 +47,7 @@ const void Scene::Init()
 
 
 	for (auto& o : _objects)
-		_renderer.Submit(o.mesh, o.texture, o.translationHandle);
+		_renderer->Submit(o.mesh, o.texture, o.translationHandle);
 
 
 
@@ -85,7 +85,7 @@ const void Scene::Init()
 	DebugUtils::ConsoleThread::AddCommand(&testStart);
 }
 
-const void Scene::Frame(float dt)
+void Scene::Frame(float dt)
 {
 	_timer.TimeStart("Frame");
 
@@ -94,12 +94,12 @@ const void Scene::Frame(float dt)
 		XMMATRIX t = XMLoadFloat4x4(&o.translation);
 		t *= XMMatrixTranslation((rand() % 200 - 100)/100.0f*dt, (rand() % 200 - 100) / 100.0f*dt, (rand() % 200 - 100) / 100.0f*dt);
 		XMStoreFloat4x4(&o.translation, t);
-		_renderer.UpdateTranslation(t, o.translationHandle);
+		_renderer->UpdateTranslation(t, o.translationHandle);
 	}
 
 
-	_renderer.SetViewMatrix(_camera.GetView());
-	_renderer.Render();
+	_renderer->SetViewMatrix(_camera.GetView());
+	_renderer->Render();
 	_timer.TimeEnd("Frame");
 	if (_testRunning)
 	{
@@ -121,18 +121,18 @@ const void Scene::Frame(float dt)
 	//printf("MS: %f\n", _timer.GetTime("Frame"));
 }
 
-const void Scene::Shutdown()
+void Scene::Shutdown()
 {
 	return void();
 }
 
 
-const void Scene::_CreateObject(const char * mesh, const char * texture, const XMMATRIX& translation)
+void Scene::_CreateObject(const char * mesh, const char * texture, const XMMATRIX& translation)
 {
 	_objects.push_back({
-		_renderer.CreateMesh(mesh),
-		_renderer.CreateTexture(texture),
-		_renderer.CreateTranslation(translation)
+		_renderer->CreateMesh(mesh),
+		_renderer->CreateTexture(texture),
+		_renderer->CreateTranslation(translation)
 	});
 
 }
@@ -142,7 +142,7 @@ int Scene::_StartTest(const char * outfile)
 	out.open(outfile, std::ios::ate);
 	if (!out.is_open())
 		return -1;
-	_renderer.StartTest();
+	_renderer->StartTest();
 	_frameCount = 0;
 	_frameTimes = 0.0f;
 	_testRunning = true;
@@ -155,7 +155,7 @@ void Scene::_EndTest()
 
 	_frameCount = 0;
 	_testRunning = false;
-	auto rendererAvg = _renderer.EndTest();
+	auto rendererAvg = _renderer->EndTest();
 	out << "Total frametime: " << avgTime << ", Renderer: " << rendererAvg << std::endl;
 	out.close();
 	printf("\n Test complete, Total frametime: %f, Average frametime in renderer was: %f\n", avgTime, rendererAvg);

@@ -14,12 +14,12 @@ using namespace DirectX;
 using namespace std;
 
 
-const void FrustumCullingThread(VkCommandBuffer* buffer, const Renderer* renderer, uint32_t start, uint32_t count)
+void FrustumCullingThread(VkCommandBuffer* buffer, const Renderer* renderer, uint32_t start, uint32_t count)
 {
 	renderer->FrustumCull(*buffer, start, count);
 }
 
-const void RecordDrawCallsThread(VkCommandBuffer* buffer, const Renderer* renderer, uint32_t start, uint32_t count)
+void RecordDrawCallsThread(VkCommandBuffer* buffer, const Renderer* renderer, uint32_t start, uint32_t count)
 {
 	renderer->RecordDrawCalls(*buffer, start, count);
 }
@@ -667,7 +667,7 @@ Renderer::TranslationHandle Renderer::CreateTranslation(const XMMATRIX & transla
 	return translationHandle;
 }
 
-const void Renderer::Submit(MeshHandle mesh, TextureHandle texture, TranslationHandle translation)
+void Renderer::Submit(MeshHandle mesh, TextureHandle texture, TranslationHandle translation)
 {
 	_renderMeshes.push_back({ mesh, texture, translation });
 
@@ -685,7 +685,7 @@ const void Renderer::Submit(MeshHandle mesh, TextureHandle texture, TranslationH
 	_vertexBufferHandler->CreateBuffer(&s, 1, VertexType::IndirectBuffer);
 }
 
-const void Renderer::UpdateTranslation(const DirectX::XMMATRIX & translation, TranslationHandle translationHandle)
+void Renderer::UpdateTranslation(const DirectX::XMMATRIX & translation, TranslationHandle translationHandle)
 {
 	XMStoreFloat4x4(&_translations[get<1>(_translationOffsets[translationHandle])], translation);
 	_vertexBufferHandler->Update((void*)&XMMatrixTranspose(translation), 1, VertexType::Translation, get<0>(_translationOffsets[translationHandle]));
@@ -718,7 +718,7 @@ void Renderer::SetProjectionMatrix(const XMMATRIX & projection)
 	_UpdateViewProjection();
 }
 
-const void Renderer::FrustumCull(VkCommandBuffer & buffer, uint32_t start, uint32_t count)const
+void Renderer::FrustumCull(VkCommandBuffer & buffer, uint32_t start, uint32_t count)const
 {
 	BoundingOrientedBox bo;
 
@@ -742,7 +742,7 @@ const void Renderer::FrustumCull(VkCommandBuffer & buffer, uint32_t start, uint3
 	return void();
 }
 
-const void Renderer::RecordDrawCalls(VkCommandBuffer & buffer, uint32_t start, uint32_t count) const
+void Renderer::RecordDrawCalls(VkCommandBuffer & buffer, uint32_t start, uint32_t count) const
 {
 	for (auto i = start; i < start + count; i++)
 	{
@@ -1109,7 +1109,7 @@ void Renderer::_BlitSwapchain(void)
 	vkQueuePresentKHR(_queue, &presentInfo);
 }
 
-const void Renderer::_CreateSurface(HWND hwnd)
+void Renderer::_CreateSurface(HWND hwnd)
 {
 	/**************** Set up window surface *******************/
 	TCHAR cname[256];
@@ -1137,7 +1137,7 @@ const void Renderer::_CreateSurface(HWND hwnd)
 
 }
 
-const void Renderer::_CreateSwapChain()
+void Renderer::_CreateSwapChain()
 {
 	/************** Set up swap chain ****************/
 	VkSurfaceCapabilitiesKHR capabilities;

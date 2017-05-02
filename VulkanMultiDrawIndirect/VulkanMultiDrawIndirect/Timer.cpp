@@ -45,7 +45,7 @@ const float Timer::GetMspf() const
 	return (float)_mspf;
 }
 
-const void Timer::Reset()
+void Timer::Reset()
 {
 	__int64 countsPerSec;
 	QueryPerformanceFrequency((LARGE_INTEGER*)& countsPerSec);
@@ -64,7 +64,7 @@ const void Timer::Reset()
 	return void();
 }
 
-const void Timer::Start()
+void Timer::Start()
 {
 	__int64 startTime;
 	QueryPerformanceCounter((LARGE_INTEGER*)&startTime);
@@ -81,7 +81,7 @@ const void Timer::Start()
 	return void();
 }
 
-const void Timer::Stop()
+void Timer::Stop()
 {
 	if (!_stopped)
 	{
@@ -94,7 +94,7 @@ const void Timer::Stop()
 	return void();
 }
 
-const void Timer::Tick()
+void Timer::Tick()
 {
 	if (_stopped)
 	{

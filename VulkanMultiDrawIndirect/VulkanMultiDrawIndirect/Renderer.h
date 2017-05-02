@@ -1,5 +1,6 @@
 #pragma once
 #include "VulkanHelpers.h"
+#include "IRenderer.h"
 #include <vector>
 #include <Parsers.h>
 #include <SDL.h>
@@ -16,7 +17,7 @@
 
 #pragma comment(lib, "vulkan-1.lib")
 
-class Renderer
+class Renderer : public IRenderer
 {
 	struct PushConstants
 	{
@@ -27,13 +28,6 @@ class Renderer
 		uint32_t Texture;
 	};
 
-
-public:
-	typedef uint32_t MeshHandle;
-	typedef uint32_t TextureHandle;
-	typedef uint32_t TranslationHandle;
-	typedef uint32_t BoundingHandle;
-
 public:
 	Renderer(HWND hwnd, uint32_t width, uint32_t height);
 	~Renderer();
@@ -43,10 +37,10 @@ public:
 	MeshHandle CreateMesh(const std::string& file);
 	uint32_t  CreateTexture(const char* path);
 	TranslationHandle CreateTranslation(const DirectX::XMMATRIX& translation);
-	const void Submit(MeshHandle mesh, TextureHandle texture, TranslationHandle translation);
-	//const void Unsubmit(/*Mesh*/);
+	void Submit(MeshHandle mesh, TextureHandle texture, TranslationHandle translation);
+	//void Unsubmit(/*Mesh*/);
 
-	const void UpdateTranslation(const DirectX::XMMATRIX& translation, TranslationHandle translationHandle);
+	void UpdateTranslation(const DirectX::XMMATRIX& translation, TranslationHandle translationHandle);
 
 	void SetViewMatrix(const DirectX::XMMATRIX& view);
 	void SetProjectionMatrix(const DirectX::XMMATRIX& projection);
@@ -55,8 +49,8 @@ public:
 	float GetAspect() { return (float)_width / _height; }
 
 
-	const void FrustumCull(VkCommandBuffer& buffer, uint32_t start, uint32_t count) const;
-	const void RecordDrawCalls(VkCommandBuffer& buffer, uint32_t start, uint32_t count) const;
+	void FrustumCull(VkCommandBuffer& buffer, uint32_t start, uint32_t count) const;
+	void RecordDrawCalls(VkCommandBuffer& buffer, uint32_t start, uint32_t count) const;
 private:
 	typedef void(Renderer::*RenderStrategyFP)();
 
@@ -77,8 +71,8 @@ private:
 	void _SubmitCmdBuffer(VkCommandBuffer& cmdBuf, VkQueue& queue);
 
 	void _BlitSwapchain(void);
-	const void _CreateSurface(HWND hwnd);
-	const void _CreateSwapChain();
+	void _CreateSurface(HWND hwnd);
+	void _CreateSwapChain();
 	void _CreateSemaphores(void);
 	bool _AllocateMemory(VkMemoryPropertyFlagBits desiredProps, const VkMemoryRequirements& memReq, VkDeviceMemory& memory);
 	void _CreateOffscreenImage(void);

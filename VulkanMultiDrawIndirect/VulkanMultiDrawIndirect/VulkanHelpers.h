@@ -38,7 +38,7 @@ namespace VulkanHelpers
 	public:
 		~DeviceAllocator() {};
 
-		virtual const void Allocate(VkDeviceSize size) = 0;
+		virtual void Allocate(VkDeviceSize size) = 0;
 	};
 
 
@@ -49,14 +49,14 @@ namespace VulkanHelpers
 		const char*        							pEngineName					= nullptr,
 		uint32_t           							engineVersion				= VK_MAKE_VERSION(0,0,0),
 		uint32_t           							apiVersion					= VK_API_VERSION_1_0,
-		const void*        							pNext						= nullptr);
+		void*        							pNext						= nullptr);
 
 	VkInstanceCreateInfo MakeInstanceCreateInfo(
 		VkInstanceCreateFlags						flags,
 		const VkApplicationInfo*					pApplicationInfo			= nullptr,
 		uint32_t									enabledLayerCount			= 0,
 		const char* const*							ppEnabledLayerNames			= nullptr,
-		const void*									pNext						= nullptr,
+		void*									pNext						= nullptr,
 		uint32_t									enabledExtensionCount		= 0,
 		const char* const*							ppEnabledExtensionNames		= nullptr);
 
@@ -65,7 +65,7 @@ namespace VulkanHelpers
 		uint32_t									queueCount,
 		const float*								pQueuePriorities			= nullptr,
 		VkDeviceQueueCreateFlags					flags						= 0,
-		const void*									pNext						= nullptr);
+		void*									pNext						= nullptr);
 
 	VkDeviceCreateInfo MakeDeviceCreateInfo(	
 		uint32_t									queueCreateInfoCount		= 0,
@@ -73,7 +73,7 @@ namespace VulkanHelpers
 		uint32_t									enabledLayerCount			= 0,
 		const char* const*							ppEnabledLayerNames			= nullptr,
 		const VkPhysicalDeviceFeatures*				pEnabledFeatures			= nullptr,
-		const void*									pNext						= nullptr,
+		void*									pNext						= nullptr,
 		uint32_t									enabledExtensionCount		= 0,
 		const char* const*							ppEnabledExtensionNames		= nullptr,
 		VkDeviceCreateFlags							flags						= 0);
@@ -81,7 +81,7 @@ namespace VulkanHelpers
 	VkCommandPoolCreateInfo MakeCommandPoolCreateInfo(
 		uint32_t									queueFamilyIndex,
 		VkCommandPoolCreateFlags					flags						= 0,
-		const void*									pNext						= nullptr);
+		void*									pNext						= nullptr);
 
 	VkSubmitInfo MakeSubmitInfo(
 		uint32_t									commandBufferCount,
@@ -91,13 +91,13 @@ namespace VulkanHelpers
 		const VkPipelineStageFlags*					pWaitDstStageMask			= nullptr,
 		uint32_t									signalSemaphoreCount		= 0,
 		const VkSemaphore*							pSignalSemaphores			= nullptr,
-		const void*									pNext						= nullptr);
+		void*									pNext						= nullptr);
 
 	VkMappedMemoryRange MakeMappedMemoryRange(
 		VkDeviceMemory								memory,
 		VkDeviceSize								size						= 0,
 		VkDeviceSize      							offset						= VK_WHOLE_SIZE,
-		const void*        							pNext						= nullptr);
+		void*        							pNext						= nullptr);
 	
 	VkBufferCreateInfo MakeBufferCreateInfo(
 		VkDeviceSize								size,
@@ -106,7 +106,7 @@ namespace VulkanHelpers
 		VkSharingMode          						sharingMode					= VK_SHARING_MODE_EXCLUSIVE,
 		uint32_t               						queueFamilyIndexCount		= 0,
 		const uint32_t*        						pQueueFamilyIndices			= nullptr,
-		const void*            						pNext						= nullptr);
+		void*            						pNext						= nullptr);
 
 
 
@@ -125,7 +125,7 @@ namespace VulkanHelpers
 		VkSharingMode            					sharingMode					 = VK_SHARING_MODE_EXCLUSIVE,
 		uint32_t                 					queueFamilyIndexCount		 = 0,
 		const uint32_t*          					pQueueFamilyIndices			 = nullptr,
-		const void*              					pNext						 = nullptr);
+		void*              					pNext						 = nullptr);
 
 
 	VkWriteDescriptorSet MakeWriteDescriptorSet(
@@ -137,7 +137,7 @@ namespace VulkanHelpers
 		const VkDescriptorImageInfo*				pImageInfo,
 		const VkDescriptorBufferInfo*				pBufferInfo,
 		const VkBufferView*							pTexelBufferView,
-		const void*									pNext						= nullptr);
+		void*									pNext						= nullptr);
 
 
 	VkGraphicsPipelineCreateInfo MakePipelineCreateInfo(
@@ -158,7 +158,7 @@ namespace VulkanHelpers
 		VkPipeline                                       basePipelineHandle		= VK_NULL_HANDLE,
 		int32_t                                          basePipelineIndex		= 0,
 		VkPipelineCreateFlags                            flags					= 0,
-		const void*                                      pNext					= nullptr);
+		void*                                      pNext					= nullptr);
 
 	VkSamplerCreateInfo MakeSamplerCreateInfo(
 		VkFilter										magFilter,
@@ -177,49 +177,49 @@ namespace VulkanHelpers
 		VkBorderColor									borderColor,
 		VkBool32										unnormalizedCoordinates,
 		VkSamplerCreateFlags							flags					= 0,
-		const void*										pNext					= nullptr);
+		void*										pNext					= nullptr);
 
 	VkQueryPoolCreateInfo MakeQueryPoolCreateInfo(
 		VkQueryType										queryType,
 		uint32_t										queryCount,
 		VkQueryPipelineStatisticFlags					pipelineStatistics		= 0,
 		VkQueryPoolCreateFlags							flags					= 0,
-		const void*										pNext					= nullptr);
+		void*										pNext					= nullptr);
 
 	/*Creation*/
-	const void CreateInstance(
+	void CreateInstance(
 		const VkInstanceCreateInfo*                 pCreateInfo,
 		VkInstance*                                 pInstance,
 		const VkAllocationCallbacks*                pAllocator					= nullptr);
 
 
-	const void CreateLogicDevice(
+	void CreateLogicDevice(
 		VkPhysicalDevice                            physicalDevice,
 		const VkDeviceCreateInfo*                   pCreateInfo,
 		VkDevice*                                   pDevice,
 		const VkAllocationCallbacks*                pAllocator					= nullptr);
 
-	const void CreateCommandPool(
+	void CreateCommandPool(
 		VkDevice									device,
 		const VkCommandPoolCreateInfo*				pCreateInfo,
 		VkCommandPool*								pCommandPool,
 		const VkAllocationCallbacks*				pAllocator					= nullptr);
 
-	const void AllocateCommandBuffers(
+	void AllocateCommandBuffers(
 		VkDevice									device,
 		VkCommandBuffer*							pCommandBuffers, 
 		VkCommandPool								commandPool,
 		VkCommandBufferLevel						level						= VK_COMMAND_BUFFER_LEVEL_PRIMARY,
 		uint32_t									commandBufferCount			= 1,
-		const void*									pNext						= nullptr);
+		void*									pNext						= nullptr);
 
-	const void CreateBuffer(
+	void CreateBuffer(
 		VkDevice									device,
 		const VkBufferCreateInfo*					pCreateInfo,
 		VkBuffer*									pBuffer,
 		const VkAllocationCallbacks*				pAllocator					= nullptr);
 
-	const void CreateBuffer(
+	void CreateBuffer(
 		VkPhysicalDevice                            physicalDevice,
 		VkDevice									device,
 		VkDeviceSize								size,
@@ -227,13 +227,13 @@ namespace VulkanHelpers
 		VkMemoryPropertyFlags						properties,
 		VkBuffer* buffer, VkDeviceMemory*			bufferMemory);
 
-	const void CreateImage(
+	void CreateImage(
 		VkDevice									device,
 		const VkImageCreateInfo*					pCreateInfo,
 		VkImage*									pImage,
 		const VkAllocationCallbacks*				pAllocator					= nullptr);
 
-	const void CreateImage2D(
+	void CreateImage2D(
 		VkDevice									device,
 		VkImage*									image,
 		uint32_t									width,
@@ -242,14 +242,14 @@ namespace VulkanHelpers
 		VkImageTiling								tiling,
 		VkImageUsageFlags							usage );
 
-	const void AllocateImageMemory(
+	void AllocateImageMemory(
 		VkDevice									device,
 		VkPhysicalDevice							physDevice,
 		VkImage										image,
 		VkMemoryPropertyFlags						propertyFlags,
 		VkDeviceMemory*								memory);
 
-	const void TransitionImageLayout(
+	void TransitionImageLayout(
 		VkDevice									device,
 		VkImage										image,
 		VkCommandBuffer								cmdBuffer,
@@ -259,16 +259,16 @@ namespace VulkanHelpers
 	);
 
 
-	const void CreateDescriptorSetLayout(
+	void CreateDescriptorSetLayout(
 		VkDevice									device,
 		VkDescriptorSetLayout*						pSetLayout,
 		uint32_t									bindingCount,
 		const VkDescriptorSetLayoutBinding*			pBindings,
 		VkDescriptorSetLayoutCreateFlags			flags						= 0,
 		const VkAllocationCallbacks*				pAllocator					= nullptr,
-		const void*									pNext						= nullptr);
+		void*									pNext						= nullptr);
 
-	const void CreatePipelineLayout(
+	void CreatePipelineLayout(
 		VkDevice									device,
 		VkPipelineLayout*							pPipelineLayout,
 		uint32_t									setLayoutCount,
@@ -276,11 +276,11 @@ namespace VulkanHelpers
 		uint32_t									pushConstantRangeCount		= 0,
 		const VkPushConstantRange*					pPushConstantRanges			= 0,
 		const VkAllocationCallbacks*				pAllocator					= nullptr,
-		const void*									pNext						= nullptr,
+		void*									pNext						= nullptr,
 		VkPipelineLayoutCreateFlags					flags						= 0);
 
 
-	const void CreateDescriptorPool(
+	void CreateDescriptorPool(
 		VkDevice									device,
 		VkDescriptorPool*							pDescriptorPool, 
 		VkDescriptorPoolCreateFlags					flags,
@@ -288,17 +288,17 @@ namespace VulkanHelpers
 		uint32_t									poolSizeCount,
 		const VkDescriptorPoolSize*					pPoolSizes,
 		const VkAllocationCallbacks*				pAllocator					= nullptr,
-		const void*									pNext						= nullptr);
+		void*									pNext						= nullptr);
 
-	const void AllocateDescriptorSets(
+	void AllocateDescriptorSets(
 		VkDevice									device,
 		VkDescriptorPool							descriptorPool,
 		uint32_t									descriptorSetCount,
 		const VkDescriptorSetLayout*				pSetLayouts,
 		VkDescriptorSet*							pDescriptorSets,
-		const void*									pNext						= nullptr);
+		void*									pNext						= nullptr);
 
-	const void CreateBufferView(
+	void CreateBufferView(
 		VkDevice                                    device,
 		VkBuffer									buffer,
 		VkBufferView*                               pView,
@@ -306,10 +306,10 @@ namespace VulkanHelpers
 		VkDeviceSize								offset						= 0,
 		VkDeviceSize								range						= VK_WHOLE_SIZE,
 		VkBufferViewCreateFlags						flags						= 0,
-		const void*									pNext						= nullptr,	
+		void*									pNext						= nullptr,	
 		const VkAllocationCallbacks*                pAllocator					= nullptr);
 
-	const void CreateGraphicsPipelines(
+	void CreateGraphicsPipelines(
 		VkDevice                                    device,
 		VkPipelineCache                             pipelineCache,
 		uint32_t                                    createInfoCount,
@@ -317,38 +317,38 @@ namespace VulkanHelpers
 		VkPipeline*                                 pPipelines,
 		const VkAllocationCallbacks*                pAllocator					= nullptr );
 
-	const void CreateSampler(
+	void CreateSampler(
 		VkDevice                                    device,
 		const VkSamplerCreateInfo*                  pCreateInfo,
 		VkSampler*                                  pSampler,
 		const VkAllocationCallbacks*                pAllocator					= nullptr);
 
-	const void CreateQueryPool(
+	void CreateQueryPool(
 		VkDevice                                    device,
 		const VkQueryPoolCreateInfo*                pCreateInfo,
 		VkQueryPool*                                pQueryPool,
 		const VkAllocationCallbacks*                pAllocator					= nullptr);
 
 	/*Command recording*/
-	const void BeginCommandBuffer(
+	void BeginCommandBuffer(
 		VkCommandBuffer								commandBuffer,
 		VkCommandBufferUsageFlags					flags						= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
 		const VkCommandBufferInheritanceInfo*		pInheritanceInfo			= nullptr,
-		const void*									pNext						= nullptr);
+		void*									pNext						= nullptr);
 
-	const void EndCommandBuffer(
+	void EndCommandBuffer(
 		VkCommandBuffer								commandBuffer);
 
-	const void ResetCommandBuffer(
+	void ResetCommandBuffer(
 		VkCommandBuffer								commandBuffer,
 		VkCommandBufferResetFlags					flags);
 
-	const void ResetCommandPool(
+	void ResetCommandPool(
 		VkDevice									device,
 		VkCommandPool								commandPool,
 		VkCommandPoolResetFlags						flags);
 
-	const void QueueSubmit(
+	void QueueSubmit(
 		VkQueue										queue,
 		uint32_t									submitCount,
 		const VkSubmitInfo*							pSubmits,
@@ -358,15 +358,15 @@ namespace VulkanHelpers
 
 
 	/*Memory management*/
-	const void AllocateMemory(
+	void AllocateMemory(
 		VkDevice                                    device,
 		VkDeviceSize								allocationSize,
 		uint32_t									memoryTypeIndex,
 		VkDeviceMemory*                             pMemory,
-		const void*									pNext						= nullptr,
+		void*									pNext						= nullptr,
 		const VkAllocationCallbacks*                pAllocator					= nullptr);
 
-	const void MapMemory(
+	void MapMemory(
 		VkDevice                                    device,
 		VkDeviceMemory                              memory,
 		void**                                      ppData,
@@ -378,7 +378,7 @@ namespace VulkanHelpers
 
 
 	/*Various operations*/
-	const void CopyDataBetweenBuffers(
+	void CopyDataBetweenBuffers(
 		VkCommandBuffer								cmdBuffer,
 		VkBuffer srcBuffer, VkDeviceSize srcOffset,
 		VkBuffer dstBuffer, VkDeviceSize dstOffset,
@@ -417,9 +417,9 @@ namespace VulkanHelpers
 
 
 	/*Property printing*/
-	const void PrintPhysicalDeviceProperties( VkPhysicalDeviceProperties prop);
-	const void PrintQueueFamilyProperties(VkQueueFamilyProperties fam);
-	const void PrintPhysicalDeviceMemoryProperties(VkPhysicalDeviceMemoryProperties prop);
+	void PrintPhysicalDeviceProperties( VkPhysicalDeviceProperties prop);
+	void PrintQueueFamilyProperties(VkQueueFamilyProperties fam);
+	void PrintPhysicalDeviceMemoryProperties(VkPhysicalDeviceMemoryProperties prop);
 
 
 };

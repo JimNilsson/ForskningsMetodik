@@ -10,8 +10,8 @@ class CPUTimer
 
 public:
 	CPUTimer();
-	const void TimeStart(const std::string& name);
-	const void TimeEnd(const std::string& name);
+	void TimeStart(const std::string& name);
+	void TimeEnd(const std::string& name);
 	const float GetTime(const std::string& name);
 	const float GetTime();
 	const float GetAVGTPF(const std::string& name);

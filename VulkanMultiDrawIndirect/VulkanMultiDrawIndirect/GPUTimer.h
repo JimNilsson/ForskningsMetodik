@@ -18,8 +18,8 @@ public:
 	GPUTimer(VkDevice device, uint8_t queryLatency, float timestampPeriod);
 	~GPUTimer();
 
-	const void Start(VkCommandBuffer& buffer, uint64_t GUID);
-	const void End(VkCommandBuffer& buffer, uint64_t GUID);
+	void Start(VkCommandBuffer& buffer, uint64_t GUID);
+	void End(VkCommandBuffer& buffer, uint64_t GUID);
 	const double GetTime(uint64_t GUID);
 	const double GetAverageTimePerSecond(uint64_t GUID);
 

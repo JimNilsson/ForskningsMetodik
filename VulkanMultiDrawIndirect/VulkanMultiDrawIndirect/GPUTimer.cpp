@@ -21,7 +21,7 @@ GPUTimer::~GPUTimer()
 }
 
 
-const void GPUTimer::Start(VkCommandBuffer& buffer, uint64_t GUID)
+void GPUTimer::Start(VkCommandBuffer& buffer, uint64_t GUID)
 {
 	auto& find = _timers.find(GUID);
 	auto& timer = _timers[GUID];
@@ -61,7 +61,7 @@ const void GPUTimer::Start(VkCommandBuffer& buffer, uint64_t GUID)
 
 }
 
-const void GPUTimer::End(VkCommandBuffer& buffer, uint64_t GUID)
+void GPUTimer::End(VkCommandBuffer& buffer, uint64_t GUID)
 {
 	auto& timer = _timers[GUID];
 	vkCmdWriteTimestamp(buffer, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, _pool, timer.end[timer.currentFrame]);

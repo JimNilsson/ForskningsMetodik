@@ -17,10 +17,10 @@ public:
 	const float TotalTimeMS()const;
 	const unsigned int GetFps()const;
 	const float GetMspf()const;
-	const void Reset();
-	const void Start();
-	const void Stop();
-	const void Tick();
+	void Reset();
+	void Start();
+	void Stop();
+	void Tick();
 
 private:
 	double _secondsPerCount;

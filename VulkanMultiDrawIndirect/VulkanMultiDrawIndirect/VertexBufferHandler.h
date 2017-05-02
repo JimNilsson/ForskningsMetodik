@@ -55,7 +55,7 @@ public:
 	void FlushBuffer(VertexType type);
 	void Update(void * data, uint32_t numElements, VertexType type, uint32_t offset);
 private:
-	const void _CreateBufferSet(VertexType type, uint32_t maxElements, bool hostVis = false);
+	void _CreateBufferSet(VertexType type, uint32_t maxElements, bool hostVis = false);
 private:
 	std::map<VertexType, BufferSet>_bufferSets;
 

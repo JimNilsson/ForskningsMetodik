@@ -175,7 +175,7 @@ void VertexBufferHandler::Update(void * data, uint32_t numElements, VertexType t
 
 }
 
-const void VertexBufferHandler::_CreateBufferSet(VertexType type, uint32_t maxElements, bool hostVis)
+void VertexBufferHandler::_CreateBufferSet(VertexType type, uint32_t maxElements, bool hostVis)
 {
 	auto& set = _bufferSets[type];
 	auto byteWidth = TypeSize(type);

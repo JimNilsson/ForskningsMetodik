@@ -7,7 +7,7 @@ CPUTimer::CPUTimer()
 	_timer.Reset();
 }
 
-const void CPUTimer::TimeStart(const std::string & name)
+void CPUTimer::TimeStart(const std::string & name)
 {
 	ProfileData& profileData = profiles[name];
 	if (profileData.QueryStarted == TRUE)
@@ -27,7 +27,7 @@ const void CPUTimer::TimeStart(const std::string & name)
 	profileData.QueryFinished = FALSE;
 }
 
-const void CPUTimer::TimeEnd(const std::string & name)
+void CPUTimer::TimeEnd(const std::string & name)
 {
 	auto i = profiles.find(name);
 	if (i == profiles.end())
