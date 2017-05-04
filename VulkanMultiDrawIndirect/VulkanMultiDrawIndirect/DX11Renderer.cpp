@@ -63,12 +63,33 @@ DX11Renderer::DX11Renderer(HWND hwnd, uint32_t width, uint32_t height)
 DX11Renderer::~DX11Renderer()
 {
 	//Dont care lol
+	SAFE_RELEASE(_swapChain);
+	SAFE_RELEASE(_backbufferRTV);
+	SAFE_RELEASE(_inputLayout);
+	SAFE_RELEASE(_vertexShader);
+	SAFE_RELEASE(_pixelShader);
+	SAFE_RELEASE(_samplerState);
+	SAFE_RELEASE(_rasterizerState);
+	SAFE_RELEASE(_dsb);
+	SAFE_RELEASE(_dsv);
+	for(auto& t : _textures)
+		SAFE_RELEASE(t);
+	for(auto& b : _vertexBuffers)
+		SAFE_RELEASE(b);
+	for (auto& b : _indexBuffers)
+		SAFE_RELEASE(b);
+	for (auto& b : _constantBuffers)
+		SAFE_RELEASE(b);
+
+	SAFE_RELEASE(_deviceContext);
+	SAFE_RELEASE(_device);
+
 }
 
 void DX11Renderer::Render(void)
 {
 
-	float clearColor[] = { 0.0f,0.0f,0.0f,0.0f };
+	float clearColor[] = { 0.0f,1.0f,0.0f,0.0f };
 
 	_deviceContext->ClearRenderTargetView(_backbufferRTV, clearColor);
 	_deviceContext->ClearDepthStencilView(_dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -387,7 +408,7 @@ void DX11Renderer::RecordDrawCalls(VkCommandBuffer & buffer, uint32_t start, uin
 void DX11Renderer::_CreateShadersAndInputLayouts()
 {
 	ID3DBlob* pVS;
-	D3DCompileFromFile(L"vertex.hlsl", nullptr, nullptr, "main", "vs_4_0",
+	D3DCompileFromFile(L"vertex.hlsl", nullptr, nullptr, "main", "vs_5_0",
 		NULL, NULL, &pVS, nullptr);
 	_device->CreateVertexShader(pVS->GetBufferPointer(), pVS->GetBufferSize(), nullptr, &_vertexShader);
 

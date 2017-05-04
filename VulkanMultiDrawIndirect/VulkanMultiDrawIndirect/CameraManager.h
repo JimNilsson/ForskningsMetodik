@@ -38,6 +38,7 @@ public:
 	void MoveRight(float amount);
 	void MoveUp(float amount);
 	void SetCameraPosition(float posX, float posY, float posZ);
+	
 	float GetFarPlaneDistance() const;
 	DirectX::XMMATRIX GetView() const;
 	DirectX::XMMATRIX GetProj() const;

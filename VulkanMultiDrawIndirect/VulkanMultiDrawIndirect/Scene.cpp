@@ -21,9 +21,11 @@ void Scene::Init()
 {
 	srand(1337);
 	_renderer->SetProjectionMatrix(_camera.GetProj());
-	_camera.TranslateActiveCamera(100.0f, 0.0f, -80.0f);
+	//_camera.TranslateActiveCamera(100.0f, 0.0f, -80.0f);
+	_camera.SetCameraPosition(0, 0, -10);
+	
 
-	XMMATRIX t = XMMatrixTranslation(-20, 0, 0);
+	XMMATRIX t = XMMatrixTranslation(0, 0, 0);
 
 	_CreateObject("../Assets/Meshes/deer-obj.obj", "../Assets/Textures/deer texture.png", t);
 	
@@ -99,6 +101,7 @@ void Scene::Frame(float dt)
 
 
 	_renderer->SetViewMatrix(_camera.GetView());
+
 	_renderer->Render();
 	_timer.TimeEnd("Frame");
 	if (_testRunning)

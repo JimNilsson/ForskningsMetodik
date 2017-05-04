@@ -11,5 +11,5 @@ SamplerState Sam : register(s0);
 
 float4 main(VS_OUT input) : SV_TARGET
 {
-	return float4(input.nor,1.0f);// DiffuseMap.Sample(Sam, input.tex);
+	return DiffuseMap.Sample(Sam, input.tex);
 }
