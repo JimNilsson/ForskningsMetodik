@@ -88,7 +88,7 @@ DX11Renderer::~DX11Renderer()
 
 void DX11Renderer::Render(void)
 {
-
+	_timer.TimeStart("Frame");
 	float clearColor[] = { 0.0f,1.0f,0.0f,0.0f };
 
 	_deviceContext->ClearRenderTargetView(_backbufferRTV, clearColor);
@@ -135,16 +135,29 @@ void DX11Renderer::Render(void)
 	}
 
 	_swapChain->Present(0, 0);
+	_timer.TimeEnd("Frame");
+	if (_testRunning)
+	{
+		_frameTimes += _timer.GetTime("Frame");
+		_frameCount++;
+	}
 }
 
 int DX11Renderer::StartTest()
 {
+	_frameCount = 0;
+	_frameTimes = 0.0f;
+	_testRunning = true;
 	return 0;
 }
 
 float DX11Renderer::EndTest()
 {
-	return 0.0f;
+	float avgTime = _frameTimes / _frameCount;
+
+	_frameCount = 0;
+	_testRunning = false;
+	return avgTime;
 }
 
 DX11Renderer::MeshHandle DX11Renderer::CreateMesh(const std::string & filename)

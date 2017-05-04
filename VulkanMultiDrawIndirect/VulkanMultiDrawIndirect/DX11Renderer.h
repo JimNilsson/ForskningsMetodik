@@ -118,13 +118,16 @@ public:
 	void RecordDrawCalls(VkCommandBuffer& buffer, uint32_t start, uint32_t count) const;
 
 private:
+	CPUTimer _timer;
 	void _CreateShadersAndInputLayouts();
 	void _CreateDepthBuffer();
 	void _CreateSamplerState();
 	void _CreateViewPort();
 	void _CreateRasterizerState();
 	void _CreateConstantBuffers();
-
+	bool _testRunning = false;
+	float _frameTimes = 0;
+	size_t _frameCount = 0;
 	int _CreateVertexBuffer(Vertex * vertexData, unsigned vertexCount);
 	int	_CreateIndexBuffer(unsigned * indexData, unsigned indexCount);
 	
