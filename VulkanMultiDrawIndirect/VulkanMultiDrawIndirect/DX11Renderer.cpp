@@ -110,12 +110,15 @@ void DX11Renderer::Render(void)
 	memcpy(mappedSubres.pData, &pfb, sizeof(pfb));
 	_deviceContext->Unmap(_constantBuffers[ConstantBuffers::CB_PER_FRAME], 0);
 	_deviceContext->VSSetConstantBuffers(0, 1, &_constantBuffers[ConstantBuffers::CB_PER_FRAME]);
-	
+	bool first = true;
 	for (auto& j : _renderJobs)
 	{
-		uint32_t stride = sizeof(Vertex);
-		uint32_t offset = 0;
-		_deviceContext->IASetVertexBuffers(0, 1, &_vertexBuffers[_meshes[j.mesh].vertexBuffer],&stride, &offset);
+		if (first)
+		{
+			uint32_t stride = sizeof(Vertex);
+			uint32_t offset = 0;
+			_deviceContext->IASetVertexBuffers(0, 1, &_vertexBuffers[_meshes[j.mesh].vertexBuffer], &stride, &offset);
+		}
 		//We dont use the index buffer
 		XMMATRIX world = _translations[j.translation];
 		PerObjectBuffer pob;
@@ -125,10 +128,13 @@ void DX11Renderer::Render(void)
 		_deviceContext->Map(_constantBuffers[ConstantBuffers::CB_PER_OBJECT], 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
 		memcpy(msr.pData, &pob, sizeof(PerObjectBuffer));
 		_deviceContext->Unmap(_constantBuffers[ConstantBuffers::CB_PER_OBJECT], 0);
-		_deviceContext->VSSetConstantBuffers(1, 1, &_constantBuffers[ConstantBuffers::CB_PER_OBJECT]);
+		if (first)
+		{
+			_deviceContext->VSSetConstantBuffers(1, 1, &_constantBuffers[ConstantBuffers::CB_PER_OBJECT]);
 
-		_deviceContext->PSSetShaderResources(0, 1, &_textures[j.texture]);
-
+			_deviceContext->PSSetShaderResources(0, 1, &_textures[j.texture]);
+		}
+		first = false;
 		_deviceContext->Draw(_meshes[j.mesh].vertexCount, 0);
 
 	}

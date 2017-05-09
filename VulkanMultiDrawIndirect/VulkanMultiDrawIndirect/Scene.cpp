@@ -32,9 +32,9 @@ void Scene::Init()
 	auto deer = _objects[0];
 	XMStoreFloat4x4(&_objects[0].translation, t);
 	
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 100; j++)
+		for (int j = 0; j < 10; j++)
 		{
 			t = XMMatrixTranslation(20.0f * i, 0, 16.0f * j);
 			XMStoreFloat4x4(&deer.translation, t);

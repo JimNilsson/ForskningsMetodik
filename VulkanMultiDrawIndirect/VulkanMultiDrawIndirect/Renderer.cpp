@@ -28,12 +28,12 @@ void RecordDrawCallsThread(VkCommandBuffer* buffer, const Renderer* renderer, ui
 
 
 
-Renderer::Renderer(HWND hwnd, uint32_t width, uint32_t height) :_width(width), _height(height), _currentRenderStrategy(&Renderer::_RenderTraditionalRecord), _doThreadedRecord(true), _doCulling(true), _testRunning(false)
+Renderer::Renderer(HWND hwnd, uint32_t width, uint32_t height) :_width(width), _height(height), _currentRenderStrategy(&Renderer::_RenderTraditionalResubmit), _doThreadedRecord(true), _doCulling(true), _testRunning(false)
 {
 
 	/************Create Instance*************/
 	const std::vector<const char*> validationLayers = {
-		"VK_LAYER_LUNARG_standard_validation"
+		//"VK_LAYER_LUNARG_standard_validation"
 	};
 
 	const auto vkAppInfo = &VulkanHelpers::MakeApplicationInfo(

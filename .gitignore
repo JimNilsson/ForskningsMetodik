@@ -261,3 +261,7 @@ ModelManifest.xml
 /VulkanMultiDrawIndirect/VulkanMultiDrawIndirect/tr.txt
 /VulkanMultiDrawIndirect/VulkanMultiDrawIndirect/ts.txt
 /VulkanMultiDrawIndirect/VulkanMultiDrawIndirect/ts.txt
+/VulkanMultiDrawIndirect/VulkanMultiDrawIndirect/x64/Release/DDSTextureLoader.obj
+/VulkanMultiDrawIndirect/VulkanMultiDrawIndirect/x64/Release/DX11Renderer.obj
+/VulkanMultiDrawIndirect/VulkanMultiDrawIndirect/x64/Release/WICTextureLoader.obj
+/VulkanMultiDrawIndirect/x64/Release/pixel.cso

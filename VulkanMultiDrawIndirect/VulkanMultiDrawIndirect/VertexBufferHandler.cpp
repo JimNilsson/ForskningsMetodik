@@ -4,13 +4,13 @@
 
 VertexBufferHandler::VertexBufferHandler(VkPhysicalDevice phydev, VkDevice device, VkQueue queue, VkCommandBuffer cmdBuffer) : _phydev(phydev), _device(device), _queue(queue), _cmdBuffer(cmdBuffer)
 {
-	_CreateBufferSet(VertexType::Position, 1000000);
-	_CreateBufferSet(VertexType::TexCoord, 1000000);
-	_CreateBufferSet(VertexType::Normal, 1000000);
-	_CreateBufferSet(VertexType::Translation, 100000, true);
-	_CreateBufferSet(VertexType::IndirectBuffer, 100000, true);
-	_CreateBufferSet(VertexType::Index, 100000);
-	_CreateBufferSet(VertexType::Bounding, 100000);
+	_CreateBufferSet(VertexType::Position, 2000000);
+	_CreateBufferSet(VertexType::TexCoord, 2000000);
+	_CreateBufferSet(VertexType::Normal, 2000000);
+	_CreateBufferSet(VertexType::Translation, 200000, true);
+	_CreateBufferSet(VertexType::IndirectBuffer, 200000, true);
+	_CreateBufferSet(VertexType::Index, 200000);
+	_CreateBufferSet(VertexType::Bounding, 200000);
 }
 
 
