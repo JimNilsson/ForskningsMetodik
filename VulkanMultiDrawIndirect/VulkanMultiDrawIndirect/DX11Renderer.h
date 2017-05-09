@@ -19,14 +19,14 @@ private:
 	IDXGISwapChain*                     _swapChain = nullptr;
 	ID3D11RenderTargetView*             _backbufferRTV = nullptr;
 
-	ID3D11InputLayout* _inputLayout;
-	ID3D11VertexShader*     _vertexShader;
-	ID3D11PixelShader*      _pixelShader;
-	ID3D11SamplerState* _samplerState;
-	ID3D11RasterizerState* _rasterizerState;
+	ID3D11InputLayout*					_inputLayout = nullptr;
+	ID3D11VertexShader*					_vertexShader = nullptr;
+	ID3D11PixelShader*					_pixelShader = nullptr;
+	ID3D11SamplerState*					_samplerState = nullptr;
+	ID3D11RasterizerState*				_rasterizerState = nullptr;
 
-	ID3D11Texture2D* _dsb;
-	ID3D11DepthStencilView* _dsv;
+	ID3D11Texture2D*					_dsb = nullptr;
+	ID3D11DepthStencilView*				_dsv = nullptr;
 
 
 	std::vector<ID3D11ShaderResourceView*> _textures; //diffuse maps, normal maps, etc.

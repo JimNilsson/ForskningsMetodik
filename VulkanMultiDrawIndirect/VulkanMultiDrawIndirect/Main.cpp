@@ -98,6 +98,7 @@ int main(int argc, char** argv)
 		//Vulkan needs "wndClass.hInstance" and "hwnd"
 
 		IRenderer* renderer = new DX11Renderer(hwnd, SCRWIDTH, SCRHEIGHT);
+
 	
 
 		Scene scene(renderer, SCRWIDTH, SCRHEIGHT);
@@ -145,6 +146,7 @@ int main(int argc, char** argv)
 			
 		} while (!quit);
 
+		delete renderer;
 		scene.Shutdown();
 
 		SDL_Quit();

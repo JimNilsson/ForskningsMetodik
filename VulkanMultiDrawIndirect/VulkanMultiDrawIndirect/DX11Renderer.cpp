@@ -62,7 +62,6 @@ DX11Renderer::DX11Renderer(HWND hwnd, uint32_t width, uint32_t height)
 
 DX11Renderer::~DX11Renderer()
 {
-	//Dont care lol
 	SAFE_RELEASE(_swapChain);
 	SAFE_RELEASE(_backbufferRTV);
 	SAFE_RELEASE(_inputLayout);

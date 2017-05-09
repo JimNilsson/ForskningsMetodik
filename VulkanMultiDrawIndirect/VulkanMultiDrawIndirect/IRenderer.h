@@ -27,7 +27,7 @@ public:
 	typedef uint32_t BoundingHandle;
 
 public:
-
+	virtual ~IRenderer() {};
 	virtual void Render(void) = 0;
 
 
